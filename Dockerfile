@@ -14,6 +14,14 @@ ADD fonts/OpenSans-LightItalic.ttf OpenSans-LightItalic.ttf
 ADD fonts/OpenSans-BoldItalic.ttf OpenSans-BoldItalic.ttf
 ADD fonts/OpenSans-SemiboldItalic.ttf OpenSans-SemiboldItalic.ttf
 ADD fonts/OpenSans-ExtraBoldItalic.ttf OpenSans-ExtraBoldItalic.ttf
+
+ADD fonts/HelveticaNeue.ttf HelveticaNeue.ttf
+ADD fonts/HelveticaNeue-Medium.ttf HelveticaNeue-Medium.ttf
+ADD fonts/HelveticaNeue-MediumItalic.ttf HelveticaNeue-MediumItalic.ttf
+ADD fonts/HelveticaNeue-Bold.ttf HelveticaNeue-Bold.ttf
+ADD fonts/HelveticaNeue-Italic.ttf HelveticaNeue-Italic.ttf
+ADD fonts/HelveticaNeue-BoldItalic.ttf HelveticaNeue-BoldItalic.ttf
+
 WORKDIR /
 
 EXPOSE 8080
