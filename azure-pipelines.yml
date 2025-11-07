@@ -1,0 +1,51 @@
+# Trigger pipeline on commits to the main branch
+trigger:
+  - master
+  - dev
+
+
+# Define variables for reuse across the pipeline
+variables:
+  imageName: 'docker.io/cgpconseil/highcharts-export-docker'
+  buildTag: '$(Build.SourceBranchName)'
+
+stages:
+  - stage: BuildAndPush
+    displayName: Build and Push Docker Image
+    jobs:
+      - job: DockerJob
+        displayName: Build and Push
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+            displayName: Checkout Code
+
+          - task: Docker@2
+            displayName: Docker Login
+            inputs:
+              command: login
+              containerRegistry: 'cgpc-docker-hub'  # Service connection name
+
+          - task: Docker@2
+            condition: succeeded()
+            displayName: Build Docker Image
+            inputs:
+              command: build
+              repository: $(imageName)
+              tags: |
+                $(buildTag)
+              dockerfile: './Dockerfile'
+              arguments: |
+                --cache-from $(imageName):$(buildTag)
+            env:
+              DOCKER_BUILDKIT: 1
+
+          - task: Docker@2
+            condition: succeeded()
+            displayName: Push Docker Image
+            inputs:
+              command: push
+              repository: $(imageName)
+              tags: |
+                $(buildTag)
